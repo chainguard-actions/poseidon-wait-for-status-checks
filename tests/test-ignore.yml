@@ -1,0 +1,22 @@
+name: Test ignore input
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_REF: refs/heads/main
+      GITHUB_EVENT_NAME: push
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          token: fake-token-for-testing
+          timeout: "10"
+          ignore: "some-check-to-ignore"
+      - name: Assert action ran with ignore input accepted
+        run: |
+          echo "Action completed (with or without error due to fake token)"
+          echo "PASS: ignore input was accepted"

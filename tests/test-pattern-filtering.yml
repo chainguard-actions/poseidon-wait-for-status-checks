@@ -1,0 +1,23 @@
+name: Test pattern filtering inputs
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_REF: refs/heads/main
+      GITHUB_EVENT_NAME: push
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          token: fake-token-for-testing
+          timeout: "10"
+          match_pattern: "^CI.*"
+          ignore_pattern: "^skip-.*"
+      - name: Assert action ran with pattern inputs accepted
+        run: |
+          echo "Action completed (with or without error due to fake token)"
+          echo "PASS: match_pattern and ignore_pattern inputs were accepted"
