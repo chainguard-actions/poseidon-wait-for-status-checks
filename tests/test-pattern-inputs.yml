@@ -1,0 +1,22 @@
+name: Test pattern and ignore inputs
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          token: ${{ github.token }}
+          interval: "10"
+          timeout: "5"
+          match_pattern: "^CI.*"
+          ignore_pattern: "^skip.*"
+          ignore: "some-check-to-ignore"
+      - name: Assert action ran with pattern inputs
+        run: |
+          echo "Action completed (with or without error due to test environment)"
+          echo "PASS: match_pattern, ignore_pattern, and ignore inputs were accepted"

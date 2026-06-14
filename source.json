@@ -1,6 +1,11 @@
 {
   "owner": "poseidon",
   "repo": "wait-for-status-checks",
-  "version": "",
-  "url": "https://github.com/poseidon/wait-for-status-checks"
+  "version": "v0.5.0",
+  "commit_sha": "6988432d64ad3f9c2608db4ca16fded1b7d36ead",
+  "url": "https://github.com/poseidon/wait-for-status-checks",
+  "policy_sha": "d636be7e43ef829af6e853da6b3c7566db9f72fe",
+  "test_policy_sha": "843adf9e4b8f85d0c08b27b9d0b09dd094b54702",
+  "test_agent_version": "1",
+  "harden_agent_version": "1"
 }
