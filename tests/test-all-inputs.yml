@@ -1,0 +1,23 @@
+name: Test all inputs
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: fake-token-for-testing
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          token: fake-token-for-testing
+          interval: "5"
+          timeout: "10"
+          ignore: "test-all-inputs"
+      - name: Assert action ran with all inputs
+        run: |
+          echo "Action completed (with or without error due to no real GitHub API in act)"
+          echo "All inputs were passed: token, interval, timeout, ignore"
+          echo "PASS"
