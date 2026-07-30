@@ -12,6 +12,7 @@ Hardened by [Chainguard](https://www.chainguard.dev) from the upstream action at
 | v0.4.1 | [`v0.4.1`](https://github.com/chainguard-actions/poseidon-wait-for-status-checks/tree/v0.4.1) | [`5fc55bc`](https://github.com/poseidon/wait-for-status-checks/commit/5fc55bcf5e80b8beab24f45ec6ed96b133d89e42) |
 | v0.5.0 | [`v0.5.0`](https://github.com/chainguard-actions/poseidon-wait-for-status-checks/tree/v0.5.0) | [`6988432`](https://github.com/poseidon/wait-for-status-checks/commit/6988432d64ad3f9c2608db4ca16fded1b7d36ead) |
 | v0.6.0 | [`v0.6.0`](https://github.com/chainguard-actions/poseidon-wait-for-status-checks/tree/v0.6.0) | [`899c768`](https://github.com/poseidon/wait-for-status-checks/commit/899c768d191b56eef585c18f8558da19e1f3e707) |
+| v0.7.0 | [`v0.7.0`](https://github.com/chainguard-actions/poseidon-wait-for-status-checks/tree/v0.7.0) | [`e7e2442`](https://github.com/poseidon/wait-for-status-checks/commit/e7e24423722c5b8e97a6dd5848827d2a412f812d) |
 
 ## Privacy
 
