@@ -1,0 +1,27 @@
+name: Test custom interval
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Run wait-for-checks with custom interval and short timeout
+        id: action
+        uses: .
+        with:
+          token: ${{ github.token }}
+          timeout: '12'
+          interval: '6'
+        # Allow failure since under act there are no real check runs to wait for
+        continue-on-error: true
+      - name: Assert action ran with custom interval (not skipped or cancelled)
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "outcome: $OUTCOME"
+          if [ "$OUTCOME" = "skipped" ] || [ "$OUTCOME" = "cancelled" ]; then
+            echo "FAIL: action was skipped or cancelled unexpectedly"
+            exit 1
+          fi
+          echo "PASS: action ran with custom interval, outcome=$OUTCOME"

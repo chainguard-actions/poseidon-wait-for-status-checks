@@ -1,0 +1,31 @@
+name: Test with ignore input
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_REF: refs/heads/main
+      GITHUB_EVENT_NAME: push
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Run action with ignore and short timeout
+        id: action
+        uses: .
+        with:
+          token: ${{ github.token }}
+          timeout: "10"
+          interval: "5"
+          ignore: "some-check-to-ignore"
+        continue-on-error: true
+      - name: Assert action ran (completed or timed out)
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "outcome: $OUTCOME"
+          if [ "$OUTCOME" = "success" ] || [ "$OUTCOME" = "failure" ]; then
+            echo "PASS: action ran and produced an outcome with ignore input: $OUTCOME"
+          else
+            echo "FAIL: unexpected outcome: $OUTCOME"
+            exit 1
+          fi

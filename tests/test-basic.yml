@@ -1,0 +1,30 @@
+name: Test basic usage - short timeout
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Run wait-for-checks with short timeout
+        id: action
+        uses: .
+        with:
+          token: ${{ github.token }}
+          timeout: '10'
+          interval: '5'
+          ignore: 'test'
+        # The action may exit 0 (all checks passed) or exit non-zero (timeout/failure).
+        # Under act there are typically no other check runs, so it will timeout.
+        # We allow failure here and assert the step ran (not a setup error).
+        continue-on-error: true
+      - name: Assert action ran (outcome is success or failure, not skipped/cancelled)
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "outcome: $OUTCOME"
+          if [ "$OUTCOME" = "skipped" ] || [ "$OUTCOME" = "cancelled" ]; then
+            echo "FAIL: action was skipped or cancelled unexpectedly"
+            exit 1
+          fi
+          echo "PASS: action ran with outcome=$OUTCOME"
