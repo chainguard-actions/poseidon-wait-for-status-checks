@@ -1,0 +1,21 @@
+name: summary
+on:
+  pull_request:
+jobs:
+  enforce-all-checks:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: read
+    steps:
+      # Checkout only needed for developing
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Watch GitHub Checks
+        uses: ./
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          delay: 5s
+          #match_pattern: test.*
+          #ignore_pattern: lint.*

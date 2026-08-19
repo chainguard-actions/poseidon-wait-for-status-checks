@@ -1,4 +1,4 @@
-name: Test ignore input
+name: Test match_pattern input
 on:
   workflow_dispatch:
 jobs:
@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - name: Run wait-for-checks with ignore list
+      - name: Run wait-for-checks with match_pattern
         id: action
         uses: .
         with:
@@ -14,14 +14,15 @@ jobs:
           timeout: '10'
           interval: '5'
           delay: '0'
-          ignore: 'test'
+          match_pattern: 'nonexistent-check-that-will-never-run'
         continue-on-error: true
-      - name: Assert action ran with ignore input
+      - name: Assert action ran with match_pattern
         env:
           OUTCOME: ${{ steps.action.outcome }}
         run: |
           echo "outcome: $OUTCOME"
-          # With the current job ignored, the action should succeed or timeout
+          # With a match_pattern that matches nothing, the action should succeed
+          # (no matching checks to wait for) or timeout gracefully
           if [ "$OUTCOME" = "skipped" ]; then
             echo "FAIL: action was skipped unexpectedly"
             exit 1
