@@ -1,4 +1,4 @@
-name: Test basic usage with short timeout
+name: Test with delay parameter
 on:
   workflow_dispatch:
 jobs:
@@ -6,21 +6,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
-      - name: Run action with short timeout
+      - name: Run action with delay before first poll
         id: action
         uses: .
         with:
           token: ${{ github.token }}
-          timeout: '10'
+          timeout: '15'
           interval: '5'
+          delay: '3'
         continue-on-error: true
-      - name: Assert action ran (timeout or success is acceptable)
+      - name: Assert action ran with delay parameter
         env:
           OUTCOME: ${{ steps.action.outcome }}
         run: |
           echo "outcome: $OUTCOME"
           if [ "$OUTCOME" = "success" ] || [ "$OUTCOME" = "failure" ]; then
-            echo "PASS: action completed with outcome '$OUTCOME'"
+            echo "PASS: action completed with outcome '$OUTCOME' when using delay parameter"
           else
             echo "FAIL: unexpected outcome '$OUTCOME'"
             exit 1
