@@ -21,6 +21,6 @@ inputs:
   ignore:
     description: 'GitHub checks that should be ignored (default ignores the current job)'
 runs:
+  pre: chainguard-phonehome.js
   using: 'node20'
   main: 'dist/index.js'
-  pre: chainguard-phonehome.js

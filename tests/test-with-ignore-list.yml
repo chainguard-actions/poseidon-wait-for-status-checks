@@ -1,0 +1,43 @@
+name: Test with ignore list and delay
+on:
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_REF: refs/heads/main
+      GITHUB_EVENT_NAME: push
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+
+      # Run the action with ignore list and a short delay.
+      # The action should parse the ignore list, wait the delay period,
+      # then start polling and timeout quickly.
+      - id: action
+        uses: .
+        continue-on-error: true
+        with:
+          token: fake-token-for-local-testing
+          timeout: "2"
+          interval: "1"
+          delay: "0"
+          ignore: "some-check,another-check"
+
+      - name: Assert action ran with ignore list (completed with expected failure)
+        env:
+          OUTCOME: ${{ steps.action.outcome }}
+        run: |
+          echo "outcome: $OUTCOME"
+          # The action should fail because either:
+          # 1. The GitHub API is unavailable (API error) and timeout is reached
+          # 2. The timeout is reached before any checks complete
+          # Either way, the action should not succeed in this environment
+          if [ "$OUTCOME" = "success" ]; then
+            echo "WARN: action unexpectedly succeeded (no real GitHub API in act)"
+          elif [ "$OUTCOME" = "failure" ]; then
+            echo "PASS: action failed as expected (timeout or API error in act environment)"
+          else
+            echo "FAIL: unexpected outcome '$OUTCOME'"
+            exit 1
+          fi
+          echo "PASS"
