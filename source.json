@@ -4,8 +4,13 @@
   "version": "v0.6.0",
   "commit_sha": "899c768d191b56eef585c18f8558da19e1f3e707",
   "url": "https://github.com/poseidon/wait-for-status-checks",
-  "policy_sha": "d636be7e43ef829af6e853da6b3c7566db9f72fe",
+  "policy_sha": "374911c4be584df24e6da57af2d990570ef0f859",
   "test_policy_sha": "843adf9e4b8f85d0c08b27b9d0b09dd094b54702",
   "test_agent_version": "2",
-  "harden_agent_version": "2"
+  "harden_agent_version": "2",
+  "dist_artifact": {
+    "gcs_uri": "gs://patch-actions-node-artifacts/dist-artifacts/poseidon/wait-for-status-checks/v0.6.0/sha256-c4ddb52f880a13b6a559004c7c7711b31b2c12be64b1803a6eac488e6b13115f.tar.gz",
+    "sha256": "c4ddb52f880a13b6a559004c7c7711b31b2c12be64b1803a6eac488e6b13115f",
+    "size_bytes": 562055
+  }
 }
